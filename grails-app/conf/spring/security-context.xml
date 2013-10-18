@@ -1,13 +1,31 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2" xsi:schemaLocation="http://www.springframework.org/schema/beans
                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                     http://www.springframework.org/schema/security
-                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                    http://www.springframework.org/schema/security/oauth2
+                    http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
 
-	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" proxy-target-class="true"></global-method-security>
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" proxy-target-class="true">
+		<expression-handler ref="oauthExpressionHandler" />
+	</global-method-security>
+
+	<oauth:expression-handler id="oauthExpressionHandler" />
+
+	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
+
+	<http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
+		<intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<anonymous enabled="false" />
+		<http-basic entry-point-ref="clientAuthenticationEntryPoint" />
+		<!-- include this only if you need to authenticate clients via request parameters -->
+		<custom-filter ref="clientCredentialsTokenEndpointFilter" after="BASIC_AUTH_FILTER" />
+		<access-denied-handler ref="oauthAccessDeniedHandler" />
+	</http>
 
 	<http use-expressions="true">
+		<intercept-url pattern="/dbconsole/**" access="permitAll" />
 		<intercept-url pattern="/secured/**" access="isAuthenticated()" />
 		<access-denied-handler ref="accessDeniedHandler" />
 		<form-login />
