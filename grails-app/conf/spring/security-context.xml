@@ -5,22 +5,20 @@
                     http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" proxy-target-class="true"></global-method-security>
+
 	<http use-expressions="true">
-		<intercept-url pattern="/secured/**" access="denyAll" />
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/secured/**" access="isAuthenticated()" />
+		<access-denied-handler ref="accessDeniedHandler" />
 		<form-login />
 	</http>
 
+
+	<beans:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<beans:property name="errorPage" value="/spring_security_login" />
+	</beans:bean>
+
 	<authentication-manager>
-		<authentication-provider user-service-ref="userService">
-			<!--
-			<user-service>
-				<user name="rod" password="koala" authorities="supervisor, teller, user" />
-				<user name="dianne" password="emu" authorities="teller, user" />
-				<user name="scott" password="wombat" authorities="user" />
-				<user name="peter" password="opal" authorities="user" />
-			</user-service>
-			-->
-		</authentication-provider>
+		<authentication-provider user-service-ref="userService" />
 	</authentication-manager>
 </beans:beans>

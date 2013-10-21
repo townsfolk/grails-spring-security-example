@@ -123,7 +123,8 @@ log4j = {
 			// turn on debugging in dev environment
 			debug 'grails.app.controllers',
 					'grails.app.domain',
-					'grails.app.services'
+					'grails.app.services',
+					'org.springframework.security'
 		}
 	}
 }
