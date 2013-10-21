@@ -1,4 +1,5 @@
 import com.example.Authority
+import com.example.Team
 import com.example.User
 import org.springframework.security.core.GrantedAuthority
 
@@ -18,6 +19,11 @@ class BootStrap {
 		User user2 = User.findByPhoneNumber("18885555678") ?: new User(phoneNumber: "18885555678", password: "password").save(failOnError: true)
 		if(!user2.authorities) {
 			user2.addToAuthorities(grantedAuthority: roleAdmin)
+		}
+
+		Team team = Team.findById(1) ?: new Team(name: "Team #1").save(failOnError: true)
+		if(!team.members) {
+			team.addToMembers(user: user1)
 		}
 	}
 	def destroy = {
