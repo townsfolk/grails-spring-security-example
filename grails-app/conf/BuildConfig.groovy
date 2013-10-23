@@ -50,6 +50,7 @@ grails.project.dependency.resolution = {
 		// specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 		// runtime 'mysql:mysql-connector-java:5.1.24'
 		String springSecurityVersion = '3.1.4.RELEASE'
+		String jacksonVersion = '2.2.3'
 
 		compile "org.springframework.security:spring-security-core:$springSecurityVersion", {
 			excludes 'aopalliance', 'aspectjrt', 'cglib-nodep', 'commons-collections', 'commons-logging',
@@ -81,6 +82,8 @@ grails.project.dependency.resolution = {
 		}
 
 		compile "org.springframework.security.oauth:spring-security-oauth2:1.0.5.RELEASE", {
+			transitive = false
+			/*
 			excludes 'aopalliance', 'commons-codec', 'commons-logging', 'fest-assert', 'groovy', 'hsqldb',
 					'jcl-over-slf4j', 'junit', 'logback-classic', 'mockito-core', 'powermock-api-mockito',
 					'powermock-api-support', 'powermock-core', 'powermock-module-junit4',
@@ -88,7 +91,11 @@ grails.project.dependency.resolution = {
 					'spring-beans', 'spring-context', 'spring-core', 'spring-expression', 'spring-jdbc',
 					'spring-security-config', 'spring-security-core', 'spring-security-web',
 					'spring-test', 'spring-tx', 'spring-web', 'spring-webmvc', 'tomcat-servlet-api'
+					*/
 		}
+
+		compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
+				'org.codehaus.jackson:jackson-core-asl:1.9.13'
 	}
 
 	plugins {

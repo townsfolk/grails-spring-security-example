@@ -10,6 +10,7 @@ class BootStrap {
 		// load up a couple authorities
 		Authority roleUser = Authority.findByAuthority("ROLE_USER") ?: new Authority(authority: "ROLE_USER").save(failOnError: true)
 		Authority roleAdmin = Authority.findByAuthority("ROLE_ADMIN") ?: new Authority(authority: "ROLE_ADMIN").save(failOnError: true)
+		Authority roleClient = Authority.findByAuthority("ROLE_CLIENT") ?: new Authority(authority: "ROLE_CLIENT").save(failOnError: true)
 
 		// load up a couple test users
 		User user1 = User.findByPhoneNumber("18885551234") ?: new User(phoneNumber: "18885551234", password: "password").save(failOnError: true)

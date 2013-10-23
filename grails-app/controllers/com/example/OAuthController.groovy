@@ -1,6 +1,7 @@
 package com.example
 
-class OauthController {
+
+class OAuthController {
 	def confirm_access() {}
 	def error() {}
 }
