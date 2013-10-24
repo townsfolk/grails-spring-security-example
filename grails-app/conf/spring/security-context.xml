@@ -26,14 +26,8 @@
 	<http use-expressions="true">
 		<intercept-url pattern="/dbconsole/**" access="permitAll" />
 		<intercept-url pattern="/secured/**" access="isAuthenticated()" />
-		<access-denied-handler ref="accessDeniedHandler" />
 		<form-login />
 	</http>
-
-
-	<beans:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-		<beans:property name="errorPage" value="/spring_security_login" />
-	</beans:bean>
 
 	<authentication-manager id="clientAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
 		<authentication-provider user-service-ref="clientDetailsUserService" />
@@ -44,8 +38,6 @@
 	</authentication-manager>
 
 	<oauth:expression-handler id="oauthExpressionHandler" />
-
-	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
 
 	<beans:bean id="clientDetailsUserService"
 		class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
@@ -106,19 +98,5 @@
 
 	<beans:bean id="oauthAccessDeniedHandler"
 		class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler" />
-
-	<context:annotation-config />
-
-	<!--
-	<beans:bean id="jacksonMessageConverter"
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<beans:property name="messageConverters">
-			<beans:list>
-				<beans:ref bean="jacksonMessageConverter" />
-			</beans:list>
-		</beans:property>
-	</beans:bean>
-	-->
 
 </beans:beans>
