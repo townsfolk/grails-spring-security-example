@@ -2,19 +2,20 @@ package com.example.oauth
 
 import org.springframework.security.oauth2.provider.ClientDetails
 
-class OAuthClient implements ClientDetails {
+import java.util.concurrent.TimeUnit
 
-	String id
-	String name
+class OauthClient implements ClientDetails {
+
+	String clientId
 	boolean secretRequired
 	String clientSecret
 	boolean scoped
 	Set<String> resourceIds
-	Set<Scopes> scope
-	Set<AuthorizedGrantTypes> authorizedGrantTypes
+	Set<Scopes> scopes
+	Set<AuthorizedGrantTypes> authorizedGrants
 	Set<String> registeredRedirectUri
-	Integer accessTokenValiditySeconds
-	Integer refreshTokenValiditySeconds
+	Integer accessTokenValiditySeconds = TimeUnit.DAYS.toSeconds(30) // 30 days
+	Integer refreshTokenValiditySeconds = TimeUnit.DAYS.toSeconds(365) // 1 year
 
 	static constraints = {
 		id(maxSize: 36)
@@ -22,23 +23,25 @@ class OAuthClient implements ClientDetails {
 
 	static hasMany = [
 			resourceIds: String,
-			scope: Scopes,
-			authorizedGrantTypes: AuthorizedGrantTypes,
+			scopes: Scopes,
+			authorizedGrants: AuthorizedGrantTypes,
 			registeredRedirectUri: String,
-			authorities: OAuthClientAuthority
+			authorities: OauthClientAuthority
 	]
 
 	static mapping = {
-		id(generator: 'uuid2')
+		authorities(lazy: false)
+		resourceIds(lazy: false)
+		scopes(lazy: false)
+		authorizedGrants(lazy: false)
+		registeredRedirectUri(lazy: false)
 	}
 
-	String getClientId() {
-		return id
-	}
+	@Override
+	Set<String> getScope() { scopes*.toString() }
 
-	Map<String, Object> getAdditionalInformation() {
-		[name: name]
-	}
+	@Override
+	Set<String> getAuthorizedGrantTypes() { authorizedGrants*.toString() }
 
-
+	Map<String, Object> getAdditionalInformation() { [:] }
 }

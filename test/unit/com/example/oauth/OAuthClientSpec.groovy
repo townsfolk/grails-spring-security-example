@@ -6,8 +6,8 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(OAuthClient)
-class OAuthClientSpec extends Specification {
+@TestFor(OauthClient)
+class OauthClientSpec extends Specification {
 
 	def setup() {
 	}

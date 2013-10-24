@@ -128,8 +128,7 @@ log4j = {
 
 			info 'org.codehaus.groovy.grails.web.servlet',         // controllers
 					'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-					'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-					'org.codehaus.groovy.grails.plugins'             // plugins
+					'org.codehaus.groovy.grails.web.mapping'         // URL mapping
 
 		}
 	}

@@ -3,10 +3,10 @@ package com.example.oauth
 import com.example.Authority
 import org.springframework.security.core.GrantedAuthority
 
-class OAuthClientAuthority implements GrantedAuthority {
+class OauthClientAuthority implements GrantedAuthority {
 	Authority grantedAuthority
 
-	static belongsTo = [client: OAuthClient]
+	static belongsTo = [client: OauthClient]
 
 	static constraints = {
 		grantedAuthority(blank: false, nullable: false)

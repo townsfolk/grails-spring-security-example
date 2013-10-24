@@ -1,6 +1,9 @@
 import com.example.Authority
 import com.example.Team
 import com.example.User
+import com.example.oauth.AuthorizedGrantTypes
+import com.example.oauth.OauthClient
+import com.example.oauth.Scopes
 import org.springframework.security.core.GrantedAuthority
 
 class BootStrap {
@@ -26,7 +29,17 @@ class BootStrap {
 		if(!team.members) {
 			team.addToMembers(user: user1)
 		}
+
+		OauthClient iphoneClient = OauthClient.findByClientId("iphone") ?: new OauthClient(
+				clientId: "iphone", secretRequired: true, clientSecret: "iphone",
+				scoped: true, scopes: Scopes.values(),
+				authorizedGrants: AuthorizedGrantTypes.values()
+		).save(failOnError: true)
+		if(!iphoneClient.authorities) {
+			iphoneClient.addToAuthorities(grantedAuthority: roleClient)
+		}
 	}
+
 	def destroy = {
 	}
 }
